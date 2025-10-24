@@ -1,0 +1,570 @@
+/* المتغيرات العامة */
+:root {
+    --primary: rgba(108, 92, 231, 0.9);
+    --primary-light: rgba(162, 155, 254, 0.7);
+    --secondary: rgba(0, 184, 148, 0.9);
+    --dark: rgba(7, 149, 189, 0.9);
+    --light: rgba(245, 246, 250, 0.95);
+    --gray: rgba(99, 110, 114, 0.8);
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --section-padding: 80px 0;
+}
+
+/* تحسينات عامة */
+body {
+    background-color: #0f172a;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    padding-top: 80px !important;
+    overflow-x: hidden;
+    margin: 0 !important;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    position: relative;
+    margin: 20px 0;
+        margin-top: 2%;
+        
+}
+
+.btn {
+    transition: all 0.3s ease;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+}
+
+.btn-primary {
+    background: var(--gradient);
+    color: white;
+    border: none;
+}
+
+.btn-outline-light {
+    border: 2px solid var(--light);
+    color: var(--light);
+    background: transparent;
+}
+
+.btn-outline-light:hover {
+    border-color: var(--primary-light);
+    background-color: rgba(222, 226, 230, 0.1);
+}
+
+/* Hero Section - Responsive Design */
+/*  */
+
+.heroContent {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.heroGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.heroTextColumn {
+    order: 2;
+    text-align: center;
+}
+
+.heroImageColumn {
+    order: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.introBadge {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(15, 156, 181, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: var(--light);
+}
+
+.badgeIcon {
+    margin-right: 0.5rem;
+    font-size: 2.rem;
+}
+
+.heroTitle {
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color:#0f172a;
+}
+
+.titleGradient {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: block;
+    font-size: 2rem;
+}
+
+.nameHighlight {
+    display: block;
+    color: var(--light);
+}
+
+.heroSubtitle {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--light);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ctaButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.imageContainer {
+    position: relative;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.imageWrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.profileImage {
+    width: 60%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 2;
+    border-radius: 20px;
+}
+
+.imageGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient);
+    opacity: 0.3;
+    filter: blur(30px);
+    z-index: 1;
+    border-radius: 20px;
+    transform: scale(0.9);
+}
+
+/* تأثيرات الحركة */
+@keyframes floatAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.floating {
+    animation: floatAnimation 6s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* تحسينات للأيقونات */
+.fas {
+    margin-right: 20px;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* تحسينات لبطاقات المعلومات */
+
+.info-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+/* التصميم المتجاوب */
+@media (max-width: 1200px) {
+    #about .container > div {
+        gap: 50px;
+    }
+
+
+}
+
+@media (min-width: 768px) {
+    .heroGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    .heroTextColumn {
+        order: 1;
+        text-align: left;
+    }
+
+
+    
+    .heroImageColumn {
+        order: 2;
+    }
+    
+    .heroSubtitle {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    .ctaButtons {
+        justify-content: flex-start;
+    }
+    
+    .imageContainer {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .heroSection {
+        padding: 4rem 2rem;
+    }
+
+
+    
+    .heroTitle {
+        font-size: 3.5rem;
+    }
+    
+    .heroGrid {
+        gap: 4rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .heroTitle {
+        font-size: 4rem;
+    }
+
+
+}
+
+@media (max-width: 992px) {
+    #about {
+        padding: 60px 0;
+    }
+
+    .profileImage {
+    width: 100%;
+}
+    
+    #about .container > div {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .about-image {
+        order: -1;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .about-content {
+        text-align: center;
+    }
+    
+    .about-content .info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #experience .container > div {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    #about {
+        padding: 40px 0;
+    }
+
+        .profileImage {
+    width: 100%;
+}
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .about-content .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .timeline-item {
+        padding-left: 20px;
+    }
+    
+    .timeline-marker {
+        left: -20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .about-content .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .about-content .fa-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .about-content p {
+        font-size: 1rem;
+    }
+    
+    .heroTitle {
+        font-size: 2rem;
+    }
+    
+    .heroSubtitle {
+        font-size: 1rem;
+    }
+    
+    .ctaButtons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+
+/* تحسينات للشاشات الكبيرة جدًا (2K و 4K) */
+@media (min-width: 1600px) {
+    .heroContent {
+        max-width: 1600px;
+    }
+
+
+    
+    
+    .heroTitle {
+        font-size: 4.5rem;
+    }
+    
+    .heroSubtitle {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        padding: 1rem 2rem;
+        font-size: 1.125rem;
+    }
+}
+
+/* تحسينات للوضع الأفقي (Landscape) على الهواتف */
+@media (max-width: 900px) and (orientation: landscape) {
+    .heroSection {
+        min-height: auto;
+        padding: 3rem 1rem;
+    }
+
+
+    
+    .heroGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .heroTextColumn {
+        text-align: left;
+    }
+    
+    .ctaButtons {
+        justify-content: flex-start;
+    }
+    
+    .imageContainer {
+        max-width: 250px;
+    }
+}
+
+/* أنماط أساسية متجاوبة */
+.about-section {
+  padding: var(--section-padding);
+}
+
+.about-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.about-image {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.profile-photo {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+/* استعلامات الوسائط للتجاوب */
+@media (min-width: 768px) {
+  .about-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .info-icon {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+
+
+/* Experience Section */
+.experience-section {
+    padding: var(--section-padding);
+    /* background: rgba(15, 23, 42, 0.7); */
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.experience-column {
+    background: rgba(4, 125, 83, 0.7);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.experience-column:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.experience-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.experience-icon {
+    width: 50px;
+    height: 50px;
+    /* background: rgba(108, 92, 231, 0.1); */
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.experience-title {
+    font-size: 1.5rem;
+    color: #fff;
+}

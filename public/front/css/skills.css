@@ -1,0 +1,438 @@
+/* Base Styles */
+.skillsSection {
+  width: 100%;
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+      margin-top: -10%;
+}
+
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Header Styles */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #2a2d7c;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.titleUnderline {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  border-radius: 2px;
+  transform-origin: left;
+  transform: scaleX(0.8);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Filter Dropdown Styles */
+.filterDropdownContainer {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 3rem;
+  width: 100%;
+  max-width: 250px;
+}
+
+.dropdownButton {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid rgba(99, 189, 241, 0.2);
+  color: #2a2d7c;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dropdownButton:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.1);
+}
+
+.buttonContent {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.filterIcon {
+  font-size: 1.1rem;
+  color: #6366f1;
+}
+
+.chevronIcon {
+  font-size: 1.1rem;
+  color: #64748b;
+  transition: transform 0.2s ease;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  z-index: 10;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(184, 8, 90, 0.9);
+}
+
+.dropdownItem {
+  width: 100%;
+}
+
+.categoryButton {
+  position: relative;
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #9e1292;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.categoryButton:hover {
+  background: rgba(9, 168, 160, 0.5);
+  color: #071983;
+}
+
+.activeCategory {
+  color: #560315;
+  font-weight: 600;
+}
+
+.activeIndicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, #530356, #800519);
+  border-radius: 0 3px 3px 0;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .dropdownButton {
+    background: rgba(7, 55, 74, 0.8);
+    border-color: rgba(59, 168, 178, 0.2);
+    color: #e2e8f0;
+    box-shadow: 0 2px 10px rgba(7, 125, 130, 0.2);
+  }
+
+  .dropdownButton:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+  }
+
+  .dropdownMenu {
+    background: rgba(7, 55, 74, 0.7);
+    border-color: rgba(26, 186, 201, 0.4);
+    box-shadow: 0 2px 10px rgba(7, 125, 130, 0.2);
+  }
+
+  .categoryButton {
+    color: #e2e8f0;
+  }
+
+  .categoryButton:hover {
+    background: rgba(25, 99, 77, 0.6);
+  }
+
+  .chevronIcon {
+    color: #5611d6;
+  }
+}
+
+/* Skills Grid */
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.categoryCard {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(99, 241, 239, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.categoryCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(3, 111, 136, 0.15);
+}
+
+.categoryTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #4a0412;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.skillsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1.2rem;
+}
+
+/* Skill Card */
+.skillCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(20, 123, 63, 0.1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.skillCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(18, 161, 161, 0.3) 0%, rgba(15, 161, 184, 0.03) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.skillCard:hover::before {
+  opacity: 1;
+}
+
+.skillIconContainer {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(57, 115, 157, 0.6) 0%, rgba(17, 138, 140, 0.1) 100%);
+  border-radius: 50%;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.skillCard:hover .iconBackground {
+  transform: scale(1);
+}
+
+.skillIconContainer svg {
+  width: 30px;
+  height: 30px;
+  color: #6366f1;
+  transition: all 0.3s ease;
+}
+
+.skillCard:hover .skillIconContainer svg {
+  color: #a855f7;
+  transform: scale(1.1);
+}
+
+.skillName {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #475569;
+  text-align: center;
+}
+
+/* Progress Bar */
+.progressContainer {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.3rem;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  border-radius: 3px;
+}
+
+.progressText {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #64748b;
+  text-align: right;
+}
+
+/* Compact Version */
+.skillsSection.compact {
+  padding: 3rem 0;
+}
+
+.skillsSection.compact .skillsContainer {
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+}
+
+.skillsSection.compact .skillCard {
+  padding: 1rem 0.5rem;
+}
+
+.skillsSection.compact .skillIconContainer {
+  width: 50px;
+  height: 50px;
+}
+
+.skillsSection.compact .skillIconContainer svg {
+  width: 25px;
+  height: 25px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+
+  .title {
+    color: #e2e8f0;
+  }
+
+  .subtitle {
+    color: #94a3b8;
+  }
+
+  .categoryCard {
+  background: rgba(56, 135, 141, 0.6);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+    border: 1px solid rgba(117, 8, 29, 0.8);
+    backdrop-filter: blur(10px);
+  }
+
+  .categoryTitle {
+    color: #e2e8f0;
+    border-bottom: 1px solid rgba(108, 6, 6, 0.8);
+  }
+
+  .skillCard {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+  }
+
+  .skillName {
+    color: #e2e8f0;
+  }
+
+  .progressBar {
+    background: rgba(30, 41, 59, 0.8);
+  }
+
+  .progressText {
+    color: #94a3b8;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .skillsSection {
+    padding: 4rem 0;
+  }
+
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .filterContainer {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .skillsSection {
+    padding: 3rem 0;
+  }
+
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .skillsContainer {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .skillCard {
+    padding: 1.2rem 0.5rem;
+  }
+}

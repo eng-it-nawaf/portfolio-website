@@ -1,0 +1,253 @@
+/* مشروع إدارة المشاريع - تصميم متجاوب */
+.project-management {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* بطاقة المشروع */
+.project-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.project-card .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-card .card-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+/* أزرار العمل */
+.btn-project {
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-project-primary {
+    background-color: #3490dc;
+    border-color: #3490dc;
+}
+
+.btn-project-primary:hover {
+    background-color: #2779bd;
+    border-color: #2270b0;
+}
+
+.btn-project-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-project-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.btn-project-danger {
+    background-color: #e3342f;
+    border-color: #e3342f;
+}
+
+.btn-project-danger:hover {
+    background-color: #cc1f1a;
+    border-color: #c21a15;
+}
+
+/* نموذج المشروع */
+.project-form .form-label {
+    font-weight: 500;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+.project-form .form-control,
+.project-form .form-select {
+    border-radius: 6px;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.project-form .form-control:focus,
+.project-form .form-select:focus {
+    border-color: #3490dc;
+    box-shadow: 0 0 0 0.25rem rgba(52, 144, 220, 0.25);
+}
+
+.project-form .form-check-input {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.2em;
+}
+
+/* معاينة الصور */
+.media-preview {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.media-preview img {
+    border-radius: 8px;
+    height: 150px;
+    object-fit: cover;
+    width: 100%;
+    border: 1px solid #eee;
+}
+
+.media-preview .btn-remove-media {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+/* جدول المشاريع */
+.projects-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.projects-table thead th {
+    background-color: #f8f9fa;
+    color: #4a5568;
+    font-weight: 600;
+    padding: 12px 15px;
+    border: none;
+}
+
+.projects-table tbody tr {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.projects-table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.projects-table tbody td {
+    padding: 15px;
+    vertical-align: middle;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.projects-table tbody td:first-child {
+    border-left: 1px solid #f1f1f1;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.projects-table tbody td:last-child {
+    border-right: 1px solid #f1f1f1;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* علامات التقنيات */
+.tech-badge {
+    display: inline-block;
+    background-color: #e2e8f0;
+    color: #4a5568;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+/* تفاصيل المشروع */
+.project-details .detail-item {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.project-details .detail-label {
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+.project-details .detail-value {
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+/* تصميم متجاوب */
+@media (max-width: 768px) {
+    .project-form .row > div {
+        margin-bottom: 15px;
+    }
+    
+    .projects-table thead {
+        display: none;
+    }
+    
+    .projects-table tbody tr {
+        display: block;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+    
+    .projects-table tbody td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid #f1f1f1;
+    }
+    
+    .projects-table tbody td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        font-weight: 600;
+        text-align: left;
+    }
+    
+    .projects-table tbody td:first-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    
+    .projects-table tbody td:last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-bottom: none;
+    }
+    
+    .project-details .row > div {
+        margin-bottom: 25px;
+    }
+}
