@@ -42,6 +42,12 @@ class ServiceController extends Controller
             ->with('success', 'تم إنشاء الخدمة بنجاح');
     }
 
+    // إضافة طريقة show المفقودة
+    public function show(Service $service)
+    {
+        return view('admin.services.show', compact('service'));
+    }
+
     public function edit(Service $service)
     {
         return view('admin.services.edit', compact('service'));
@@ -119,24 +125,24 @@ class ServiceController extends Controller
         ]);
     }
 
-private function processArrayInput($input)
-{
-    if (is_null($input)) {
+    private function processArrayInput($input)
+    {
+        if (is_null($input)) {
+            return [];
+        }
+        
+        if (is_string($input)) {
+            return array_filter(explode(',', $input), function($item) {
+                return !empty(trim($item));
+            });
+        }
+        
+        if (is_array($input)) {
+            return array_filter($input, function($item) {
+                return !empty(trim($item));
+            });
+        }
+        
         return [];
     }
-    
-    if (is_string($input)) {
-        return array_filter(explode(',', $input), function($item) {
-            return !empty(trim($item));
-        });
-    }
-    
-    if (is_array($input)) {
-        return array_filter($input, function($item) {
-            return !empty(trim($item));
-        });
-    }
-    
-    return [];
-}
 }

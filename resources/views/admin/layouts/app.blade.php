@@ -21,8 +21,6 @@
 </head>
 <body class="admin-body">
 
- 
-
     <div class="admin-container">
         <!-- Sidebar -->
         @include('admin.layouts.partials.sidebar')
@@ -46,6 +44,5 @@
     
     <!-- Scripts -->
     @include('admin.layouts.partials.scripts')
-    @stack('scripts')
 </body>
 </html>

@@ -1,62 +1,36 @@
+// admin.js - المكونات التفاعلية للوحة التحكم
 document.addEventListener('DOMContentLoaded', function() {
-    // Preloader
-    window.addEventListener('load', function() {
-        document.querySelector('.preloader').style.display = 'none';
-    });
-
-    // Toggle sidebar on mobile
+    // تبديل القائمة الجانبية
     const menuToggle = document.querySelector('.menu-toggle');
     const sidebar = document.querySelector('.admin-sidebar');
-    const sidebarOverlay = document.createElement('div');
-    sidebarOverlay.className = 'sidebar-overlay';
-    document.body.appendChild(sidebarOverlay);
-
-    menuToggle.addEventListener('click', function() {
-        sidebar.classList.add('show');
-        sidebarOverlay.classList.add('show');
-    });
-
-    sidebarOverlay.addEventListener('click', function() {
-        sidebar.classList.remove('show');
-        this.classList.remove('show');
-    });
-
-    // Toggle user dropdown
-    const userMenuBtn = document.querySelector('.user-menu-btn');
-    const userDropdown = document.querySelector('.user-dropdown');
-
-    if (userMenuBtn && userDropdown) {
-        userMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            userDropdown.classList.toggle('show');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function() {
-            userDropdown.classList.remove('show');
+    
+    if (menuToggle && sidebar) {
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
         });
     }
-
-    // Initialize tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function(tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
+    
+    // إغلاق القائمة عند النقر خارجها (للشاشات الصغيرة)
+    document.addEventListener('click', function(event) {
+        if (window.innerWidth <= 768) {
+            if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                sidebar.classList.remove('active');
+            }
+        }
     });
-
-    // Initialize popovers
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popoverTriggerList.map(function(popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl);
-    });
-
-    // Sortable tables
-    if (typeof Sortable !== 'undefined') {
-        document.querySelectorAll('.sortable-table').forEach(table => {
-            new Sortable(table.querySelector('tbody'), {
+    
+    // تهيئة Sortable.js للجداول القابلة للسحب
+    const sortableTables = document.querySelectorAll('.sortable-table');
+    sortableTables.forEach(table => {
+        const tbody = table.querySelector('tbody.sortable');
+        if (tbody) {
+            new Sortable(tbody, {
                 handle: '.sortable-handle',
                 animation: 150,
-                onEnd: function() {
-                    const order = Array.from(table.querySelectorAll('tr[data-id]')).map(row => row.dataset.id);
+                ghostClass: 'sortable-ghost',
+                onEnd: function(evt) {
+                    const order = Array.from(tbody.querySelectorAll('tr')).map(row => row.dataset.id);
+                    const category = tbody.dataset.category;
                     const url = table.dataset.sortUrl;
                     
                     fetch(url, {
@@ -65,16 +39,33 @@ document.addEventListener('DOMContentLoaded', function() {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                         },
-                        body: JSON.stringify({ order })
-                    });
+                        body: JSON.stringify({ order, category })
+                    }).then(response => response.json())
+                      .then(data => {
+                          if (data.success) {
+                              console.log('تم تحديث الترتيب بنجاح');
+                          }
+                      });
                 }
             });
-        });
-    }
-
-    // Toast notifications
-    const toastElList = [].slice.call(document.querySelectorAll('.toast'));
-    const toastList = toastElList.map(function(toastEl) {
-        return new bootstrap.Toast(toastEl).show();
+        }
+    });
+    
+    // تهيئة أدوات التلميح
+    const tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipElements.forEach(element => {
+        new bootstrap.Tooltip(element);
+    });
+    
+    // التحقق من صحة النماذج
+    const forms = document.querySelectorAll('.needs-validation');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
     });
 });

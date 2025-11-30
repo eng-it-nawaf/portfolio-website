@@ -1,0 +1,509 @@
+/* ===== إدارة المهارات ===== */
+.skills-management {
+    padding: 2rem;
+    background: #f8fafc;
+    min-height: 100vh;
+}
+
+/* بطاقات الفئات */
+.category-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.category-header {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.category-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+/* الجدول */
+.skills-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+}
+
+.skills-table thead th {
+    background: rgba(0, 0, 0, 0.02);
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    text-align: right;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.skills-table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.skills-table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.02);
+    transform: translateX(-5px);
+}
+
+.skills-table tbody td {
+    padding: 1.25rem 1.5rem;
+    vertical-align: middle;
+    color: #4a5568;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* مقبض السحب */
+.sortable-handle {
+    color: #a0aec0;
+    cursor: grab;
+    transition: color 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.sortable-handle:hover {
+    color: #4a5568;
+}
+
+.sortable-ghost {
+    opacity: 0.6;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* شريط التقدم */
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 200px;
+}
+
+.progress-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1a1a1a, #4a5568);
+    transition: width 1s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.percentage-text {
+    font-weight: 600;
+    color: #1a1a1a;
+    min-width: 40px;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+/* الأيقونات */
+.skill-icon {
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.skill-icon:hover {
+    background: rgba(0, 0, 0, 0.08);
+    transform: scale(1.1);
+}
+
+/* أزرار الإجراءات */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.btn-action {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-edit {
+    background: rgba(0, 0, 0, 0.05);
+    color: #4a5568;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-edit:hover {
+    background: #1a1a1a;
+    color: white;
+    transform: scale(1.1);
+}
+
+.btn-delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.btn-delete:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* زر الإضافة */
+.btn-add {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: white;
+    border: none;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: white;
+}
+
+/* النماذج */
+.form-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.form-body {
+    padding: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231a1a1a' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: left 1rem center;
+    background-repeat: no-repeat;
+    background-size: 16px 12px;
+    padding-left: 3rem;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-back {
+    background: rgba(0, 0, 0, 0.05);
+    color: #4a5568;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-back:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #1a1a1a;
+    transform: translateX(-5px);
+}
+
+/* تفاصيل المهارة */
+.skill-details {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.detail-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: between;
+    align-items: center;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #1a1a1a;
+    min-width: 120px;
+}
+
+.detail-value {
+    color: #4a5568;
+    flex: 1;
+}
+
+/* متغيرات الألوان */
+:root {
+    --primary-color: #1a1a1a;
+    --secondary-color: #2d2d2d;
+    --accent-color: #4a5568;
+    --background-color: #f8fafc;
+    --card-background: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a5568;
+    --border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* التجاوب */
+@media (max-width: 1024px) {
+    .skills-management {
+        padding: 1rem;
+    }
+    
+    .skills-table {
+        font-size: 0.875rem;
+    }
+    
+    .skills-table thead th,
+    .skills-table tbody td {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-header {
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .form-body {
+        padding: 1.5rem;
+    }
+    
+    .skills-table thead {
+        display: none;
+    }
+    
+    .skills-table tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        padding: 1rem;
+    }
+    
+    .skills-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .skills-table tbody td:last-child {
+        border-bottom: none;
+    }
+    
+    .skills-table tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-left: 1rem;
+    }
+    
+    .progress-container {
+        min-width: auto;
+    }
+    
+    .action-buttons {
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .skills-management {
+        padding: 0.5rem;
+    }
+    
+    .category-header {
+        padding: 1rem;
+    }
+    
+    .form-body {
+        padding: 1rem;
+    }
+    
+    .btn-add,
+    .btn-submit,
+    .btn-back {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* أنيميشن مخصص */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* تأثيرات التحميل */
+.loading-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}

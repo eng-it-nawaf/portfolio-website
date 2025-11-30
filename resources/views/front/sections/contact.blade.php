@@ -83,9 +83,10 @@
   </div>
 </section>
 
+<link href="{{ asset('front/css/contact.css') }}" rel="stylesheet">
 
 
-<script>
+{{--  <script>
 // Initialize particles with random positions
 document.querySelectorAll('.particle').forEach(particle => {
   const randomX = Math.random() * 2 - 1;
@@ -94,4 +95,4 @@ document.querySelectorAll('.particle').forEach(particle => {
   particle.style.left = `${Math.random() * 100}%`;
   particle.style.top = `${Math.random() * 100}%`;
 });
-</script>
+</script>  --}}

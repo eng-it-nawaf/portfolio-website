@@ -38,33 +38,25 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="{{ asset('front/css/front.css') }}" rel="stylesheet">
-    <link href="{{ asset('front/css/about.css') }}" rel="stylesheet">
-    <link href="{{ asset('front/css/sectcontact.css') }}" rel="stylesheet">
-
-
     
     @stack('styles')
 </head>
 <body class="global-background">
     <!-- تأثيرات الخلفية -->
-    <div class="cursorEffect"></div>
-    <div class="particlesContainer" id="particles-js"></div>
-    <div class="interactiveGrid"></div>
-    <div class="movingLight"></div>
+    
     
     <!-- Fixed Image -->
-    @if(isset($profile) && $profile->photo)
+    {{--  @if(isset($profile) && $profile->photo)
     <div class="fixed-profile-image">
         <img src="{{ asset('storage/' . $profile->photo) }}" alt="{{ $profile->name }}" class="fixed-profile-img">
     </div>
-    @endif
+    @endif  --}}
     
     <!-- Navigation -->
     @include('front.partials.navbar')
     
     <!-- Main Content -->
-    <main class="py-4 main-content-wrapper">
+    <main >
         @yield('content')
     </main>
     
@@ -77,6 +69,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <!-- Custom JS -->
     <script src="{{ asset('front/js/front.js') }}"></script>
+    <script src="{{ asset('front/js/animations.js') }}"></script>
 
 <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

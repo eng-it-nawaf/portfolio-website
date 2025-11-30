@@ -51,10 +51,12 @@ Route::post('projects/{project}/reorder-images', [ProjectController::class, 'reo
     // Experiences
     Route::resource('experiences', ExperienceController::class);
     
-    // Messages
-    Route::resource('messages', MessageController::class)->only(['index', 'show', 'destroy']);
-    Route::post('messages/{message}/mark-as-read', [MessageController::class, 'markAsRead'])
-        ->name('messages.markAsRead');
+    // رسائل
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
+    Route::post('/messages/{message}/mark-as-read', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+
 
         // Services
     Route::resource('services', ServiceController::class);

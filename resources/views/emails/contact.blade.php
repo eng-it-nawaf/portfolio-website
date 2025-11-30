@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>رسالة جديدة من موقعك</title>
+    <meta charset="utf-8">
+    <title>رسالة جديدة من الموقع</title>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        body { font-family: Arial, sans-serif; direction: rtl; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #f8f9fa; padding: 20px; text-align: center; }
-        .content { padding: 20px; background-color: #fff; }
-        .footer { margin-top: 20px; padding: 10px; text-align: center; font-size: 12px; color: #6c757d; }
+        .header { background: #f8f9fa; padding: 20px; text-align: center; }
+        .content { background: white; padding: 20px; border: 1px solid #dee2e6; }
+        .field { margin-bottom: 15px; }
+        .label { font-weight: bold; color: #495057; }
     </style>
 </head>
 <body>
@@ -15,17 +17,25 @@
         <div class="header">
             <h2>رسالة جديدة من موقعك</h2>
         </div>
-        
         <div class="content">
-            <p><strong>الاسم:</strong> {{ $data['name'] }}</p>
-            <p><strong>البريد الإلكتروني:</strong> {{ $data['email'] }}</p>
-            <p><strong>الموضوع:</strong> {{ $data['subject'] }}</p>
-            <p><strong>الرسالة:</strong></p>
-            <p>{{ $data['message'] }}</p>
-        </div>
-        
-        <div class="footer">
-            تم إرسال هذه الرسالة تلقائياً من نظام الموقع
+            <div class="field">
+                <span class="label">الاسم:</span>
+                <span>{{ $name }}</span>
+            </div>
+            <div class="field">
+                <span class="label">البريد الإلكتروني:</span>
+                <span>{{ $email }}</span>
+            </div>
+            <div class="field">
+                <span class="label">الموضوع:</span>
+                <span>{{ $subject }}</span>
+            </div>
+            <div class="field">
+                <span class="label">الرسالة:</span>
+                <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                    {{ $message }}
+                </div>
+            </div>
         </div>
     </div>
 </body>

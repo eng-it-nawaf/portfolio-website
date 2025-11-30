@@ -1,49 +1,100 @@
 @extends('admin.layouts.app')
 
+@section('title', 'تفاصيل المهارة')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('admin/css/admin-skills.css') }}">
+@endpush
+
 @section('content')
-<div class="container-fluid">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Skill Details: {{ $skill->name }}</h6>
-            <a href="{{ route('admin.skills.index') }}" class="btn btn-sm btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
+<div class="skills-management">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">تفاصيل المهارة</h1>
+            <p class="page-description">عرض معلومات المهارة: {{ $skill->name }}</p>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Name:</label>
-                        <p>{{ $skill->name }}</p>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Category:</label>
-                        <p>{{ ucfirst($skill->category) }}</p>
-                    </div>
+        <a href="{{ route('admin.skills.index') }}" class="btn-back">
+            <i class="fas fa-arrow-left"></i> رجوع للقائمة
+        </a>
+    </div>
+
+    <div class="skill-details fade-in-up">
+        <div class="form-header">
+            <h3 class="form-title">
+                <i class="fas fa-info-circle"></i> معلومات المهارة
+            </h3>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">اسم المهارة:</span>
+            <span class="detail-value">{{ $skill->name }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">الأيقونة:</span>
+            <span class="detail-value">
+                <div class="skill-icon">
+                    <i class="{{ $skill->icon }}"></i>
                 </div>
-                
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Percentage:</label>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" 
-                                 style="width: {{ $skill->percentage }}%" 
-                                 aria-valuenow="{{ $skill->percentage }}" 
-                                 aria-valuemin="0" 
-                                 aria-valuemax="100">{{ $skill->percentage }}%
-                            </div>
-                        </div>
+                <small class="text-muted ms-2">{{ $skill->icon }}</small>
+            </span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">التصنيف:</span>
+            <span class="detail-value">
+                <span class="badge bg-dark">{{ $skill->category }}</span>
+            </span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">المستوى:</span>
+            <span class="detail-value">
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: {{ $skill->percentage }}%"></div>
                     </div>
+                    <span class="percentage-text">{{ $skill->percentage }}%</span>
                 </div>
-            </div>
-            
-            <div class="mt-4">
-                <a href="{{ route('admin.skills.edit', $skill) }}" class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Edit Skill
+            </span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">تاريخ الإنشاء:</span>
+            <span class="detail-value">{{ $skill->created_at->format('d/m/Y H:i') }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">آخر تحديث:</span>
+            <span class="detail-value">{{ $skill->updated_at->format('d/m/Y H:i') }}</span>
+        </div>
+        
+        <div class="form-body">
+            <div class="d-flex gap-3">
+                <a href="{{ route('admin.skills.edit', $skill) }}" class="btn-submit">
+                    <i class="fas fa-edit"></i> تعديل المهارة
+                </a>
+                <a href="{{ route('admin.skills.index') }}" class="btn-back">
+                    <i class="fas fa-list"></i> عرض جميع المهارات
                 </a>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+// Animate progress bar on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const progressBar = document.querySelector('.progress-bar-fill');
+    if (progressBar) {
+        const width = progressBar.style.width;
+        progressBar.style.width = '0';
+        setTimeout(() => {
+            progressBar.style.width = width;
+        }, 100);
+    }
+});
+</script>
+@endpush

@@ -15,45 +15,31 @@ class ContactMessage extends Mailable
 
     public $data;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(array $data)
+    public function __construct($data)
     {
         $this->data = $data;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Contact Message: ' . $this->data['subject'],
+            subject: 'رسالة جديدة من ' . $this->data['name'],
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
-            view: 'emails.contact',
+            view: 'emails.contact-message',
             with: [
                 'name' => $this->data['name'],
                 'email' => $this->data['email'],
                 'subject' => $this->data['subject'],
-                'messageContent' => $this->data['message'],
+                'message' => $this->data['message'],
             ],
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
     public function attachments(): array
     {
         return [];

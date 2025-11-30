@@ -40,7 +40,7 @@ class HomeController extends Controller
         $categories = ['web' => 'Web', 'mobile' => 'Mobile', 'desktop' => 'Desktop'];
         $services = Service::active()->ordered()->get();
         
-        return view('front.projects', compact('profile','projects', 'services', 'categories'));
+        return view('front.projects.index', compact('profile','projects', 'services', 'categories'));
     }
     
  public function projectDetail($id)
@@ -59,14 +59,14 @@ class HomeController extends Controller
                             ->take(3)
                             ->get();
     
-    return view('front.sections.project-detail', compact('profile','project', 'services','relatedProjects'));
+    return view('front.projects.project-detail', compact('profile','project', 'services','relatedProjects'));
 }
     
     public function contact()
     {
         $services = Service::active()->ordered()->get();
         $profile = Profile::firstOrFail();
-        return view('front.contact', compact('services','profile'));
+        return view('front.contact-us.contact', compact('services','profile'));
     }
     
     public function changeLanguage($locale)

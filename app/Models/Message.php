@@ -11,10 +11,14 @@ class Message extends Model
 
     protected $fillable = [
         'name',
-        'email',
+        'email', 
         'subject',
         'message',
         'is_read'
+    ];
+
+    protected $attributes = [
+        'is_read' => false
     ];
 
     protected $casts = [

@@ -170,3 +170,177 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     requestAnimationFrame(onScroll);
 });
+
+
+
+// JavaScript for Skills Galaxy
+document.addEventListener('DOMContentLoaded', function() {
+    const planets = document.querySelectorAll('.planet');
+    const planetCard = document.getElementById('planetCard');
+    const cardSkillTitle = document.getElementById('cardSkillTitle');
+    const cardSkillType = document.getElementById('cardSkillType');
+    const cardStats = document.getElementById('cardStats');
+    const planetFeatures = document.getElementById('planetFeatures');
+    const cardIcon = document.getElementById('cardIcon');
+
+    // بيانات المهارات
+    const skillsData = {
+        frontend: {
+            title: "Frontend Development",
+            type: "Web Technology",
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>`,
+            stats: [
+                { label: "Experience", value: "4+ Years" },
+                { label: "Proficiency", value: "Advanced" },
+                { label: "Projects", value: "50+" }
+            ],
+            features: ["React", "Vue.js", "Angular", "TypeScript", "SASS"]
+        },
+        backend: {
+            title: "Backend Development",
+            type: "Server Technology",
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/>
+                  </svg>`,
+            stats: [
+                { label: "Experience", value: "3+ Years" },
+                { label: "Proficiency", value: "Advanced" },
+                { label: "Projects", value: "30+" }
+            ],
+            features: ["Node.js", "Python", "PHP", "Laravel", "Express"]
+        },
+        database: {
+            title: "Database Management",
+            type: "Data Technology",
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                  </svg>`,
+            stats: [
+                { label: "Experience", value: "3+ Years" },
+                { label: "Proficiency", value: "Intermediate" },
+                { label: "Projects", value: "25+" }
+            ],
+            features: ["MySQL", "MongoDB", "PostgreSQL", "Redis", "Firebase"]
+        },
+        mobile: {
+            title: "Mobile Development",
+            type: "App Technology",
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                    <path d="M12 18h.01"/>
+                  </svg>`,
+            stats: [
+                { label: "Experience", value: "2+ Years" },
+                { label: "Proficiency", value: "Intermediate" },
+                { label: "Projects", value: "15+" }
+            ],
+            features: ["React Native", "Flutter", "iOS", "Android", "PWA"]
+        },
+        devops: {
+            title: "DevOps & Cloud",
+            type: "Infrastructure",
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/>
+                    <path d="M12 8v8"/>
+                  </svg>`,
+            stats: [
+                { label: "Experience", value: "2+ Years" },
+                { label: "Proficiency", value: "Intermediate" },
+                { label: "Projects", value: "20+" }
+            ],
+            features: ["Docker", "AWS", "CI/CD", "Linux", "Nginx"]
+        },
+        design: {
+            title: "UI/UX Design",
+            type: "Creative Technology",
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>`,
+            stats: [
+                { label: "Experience", value: "3+ Years" },
+                { label: "Proficiency", value: "Advanced" },
+                { label: "Projects", value: "40+" }
+            ],
+            features: ["Figma", "Adobe XD", "Prototyping", "Wireframing", "Design Systems"]
+        }
+    };
+
+    // إضافة event listeners للكواكب
+    planets.forEach(planet => {
+        planet.addEventListener('mouseenter', function() {
+            const skillType = this.getAttribute('data-skill');
+            showPlanetCard(skillType, this);
+        });
+
+        planet.addEventListener('mouseleave', function() {
+            hidePlanetCard();
+        });
+
+        planet.addEventListener('click', function() {
+            const skillType = this.getAttribute('data-skill');
+            showPlanetCard(skillType, this);
+        });
+    });
+
+    // إظهار بطاقة الكوكب
+    function showPlanetCard(skillType, planetElement) {
+        const skillData = skillsData[skillType];
+        if (!skillData) return;
+
+        // تحديث المحتوى
+        cardSkillTitle.textContent = skillData.title;
+        cardSkillType.textContent = skillData.type;
+        cardIcon.innerHTML = skillData.icon;
+
+        // تحديث الإحصائيات
+        cardStats.innerHTML = '';
+        skillData.stats.forEach(stat => {
+            const statElement = document.createElement('div');
+            statElement.className = 'stat';
+            statElement.innerHTML = `
+                <span class="statLabel">${stat.label}</span>
+                <span class="statValue">${stat.value}</span>
+            `;
+            cardStats.appendChild(statElement);
+        });
+
+        // تحديث الميزات
+        planetFeatures.innerHTML = '';
+        skillData.features.forEach(feature => {
+            const featureElement = document.createElement('span');
+            featureElement.textContent = feature;
+            planetFeatures.appendChild(featureElement);
+        });
+
+        // إظهار البطاقة
+        planetCard.style.display = 'block';
+
+        // إضافة تأثير highlight للكوكب
+        planets.forEach(p => p.classList.remove('highlighted'));
+        planetElement.classList.add('highlighted');
+    }
+
+    // إخفاء بطاقة الكوكب
+    function hidePlanetCard() {
+        planetCard.style.display = 'none';
+        planets.forEach(p => p.classList.remove('highlighted'));
+    }
+
+    // إغلاق البطاقة عند النقر خارجها
+    document.addEventListener('click', function(event) {
+        if (!planetCard.contains(event.target) && !event.target.closest('.planet')) {
+            hidePlanetCard();
+        }
+    });
+
+    // تأثير مؤشر الماوس
+    const cursorEffect = document.getElementById('cursorEffect');
+    document.addEventListener('mousemove', function(e) {
+        cursorEffect.style.left = e.clientX + 'px';
+        cursorEffect.style.top = e.clientY + 'px';
+    });
+});
+
