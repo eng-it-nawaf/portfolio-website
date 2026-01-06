@@ -1,5 +1,5 @@
 <?php
-// database/migrations/xxxx_create_projects_table.php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->text('technologies')->nullable(); // نصي بدلاً من علاقة
-            $table->string('category'); // ويب، موبايل، سطح المكتب
+            $table->text('technologies')->nullable();
+            $table->string('category');
             $table->string('github_url')->nullable();
             $table->string('demo_url')->nullable();
             $table->string('play_store_url')->nullable();

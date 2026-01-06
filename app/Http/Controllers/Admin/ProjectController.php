@@ -61,33 +61,78 @@ class ProjectController extends Controller
         return view('admin.projects.edit', compact('project', 'categories'));
     }
 
-    public function update(Request $request, Project $project)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'technologies' => 'required|string',
-            'category' => 'required|in:web,mobile,desktop',
-            'github_url' => 'nullable|url',
-            'demo_url' => 'nullable|url',
-            'play_store_url' => 'nullable|url',
-            'completed_at' => 'required|date',
-            'images' => 'sometimes|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+// في ProjectController.php
+public function update(Request $request, Project $project)
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'technologies' => 'required|string',
+        'category' => 'required|in:web,mobile,desktop',
+        'github_url' => 'nullable|url',
+        'demo_url' => 'nullable|url',
+        'play_store_url' => 'nullable|url',
+        'completed_at' => 'required|date',
+        'is_active' => 'boolean',
+        'new_images' => 'nullable|array',
+        'new_images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB
+        'existing_images' => 'nullable|array',
+    ]);
 
-        $project->update($validated);
+    $project->update([
+        'title' => $validated['title'],
+        'description' => $validated['description'],
+        'technologies' => $validated['technologies'],
+        'category' => $validated['category'],
+        'github_url' => $validated['github_url'] ?? null,
+        'demo_url' => $validated['demo_url'] ?? null,
+        'play_store_url' => $validated['play_store_url'] ?? null,
+        'completed_at' => $validated['completed_at'],
+        'is_active' => $request->has('is_active') ? 1 : 0,
+    ]);
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('projects', 'public');
-                $project->images()->create(['image_path' => $path]);
-            }
-        }
-
-        return redirect()->route('admin.projects.index')
-            ->with('success', 'تم تحديث المشروع بنجاح');
+    // حذف الصور التي تم إزالتها
+    if ($request->has('existing_images')) {
+        $project->images()
+            ->whereNotIn('id', $request->existing_images)
+            ->get()
+            ->each(function ($image) {
+                Storage::disk('public')->delete($image->image_path);
+                $image->delete();
+            });
     }
+
+    // إضافة الصور الجديدة
+    if ($request->hasFile('new_images')) {
+        foreach ($request->file('new_images') as $image) {
+            $path = $image->store('projects', 'public');
+            $project->images()->create(['image_path' => $path]);
+        }
+    }
+
+    return redirect()->route('admin.projects.index')
+        ->with('success', 'تم تحديث المشروع بنجاح');
+}
+
+// إضافة دالة لحذف الصور بشكل منفصل
+public function deleteImage(Project $project, $imageId)
+{
+    try {
+        $image = $project->images()->findOrFail($imageId);
+        
+        // حذف الملف من التخزين
+        if (Storage::disk('public')->exists($image->image_path)) {
+            Storage::disk('public')->delete($image->image_path);
+        }
+        
+        // حذف السجل من قاعدة البيانات
+        $image->delete();
+        
+        return response()->json(['success' => true, 'message' => 'تم حذف الصورة بنجاح']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'حدث خطأ أثناء حذف الصورة'], 500);
+    }
+}
 
     public function destroy(Project $project)
     {
@@ -144,12 +189,4 @@ public function uploadImage(Request $request, Project $project)
     ]);
 }
 
-public function deleteImage(Project $project, $imageId)
-{
-    $image = $project->images()->findOrFail($imageId);
-    Storage::disk('public')->delete($image->image_path);
-    $image->delete();
-
-    return response()->json(['success' => true]);
-}
 }

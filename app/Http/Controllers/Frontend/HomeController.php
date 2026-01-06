@@ -13,15 +13,16 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
-        $profile = Profile::firstOrFail();
-        $skills = Skill::orderBy('order')->get();
-        $projects = Project::with('images')->latest()->take(3)->get(); // تم إزالة technologies
-        $experiences = Experience::orderBy('start_date', 'desc')->get();
-        $services = Service::where('is_active', true)->orderBy('order')->take(5)->get();
-        return view('front.home', compact('profile', 'skills', 'projects', 'experiences' , 'services'));
-    }
+public function index()
+{
+    $profile = Profile::firstOrFail();
+    $skills = Skill::orderBy('order')->get();
+    $projects = Project::with('images')->latest()->take(3)->get();
+    $experiences = Experience::orderBy('start_date', 'desc')->get();
+    $services = Service::active()->ordered()->take(6)->get();
+    
+    return view('front.home', compact('profile', 'skills', 'projects', 'experiences', 'services'));
+}
     
     public function about()
     {

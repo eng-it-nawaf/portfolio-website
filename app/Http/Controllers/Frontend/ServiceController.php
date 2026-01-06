@@ -20,7 +20,9 @@ class ServiceController extends Controller
     public function show($slug)
     {
         $profile = Profile::firstOrFail();
-        $service = Service::with('projects')->where('slug', $slug)->active()->firstOrFail();
+        
+        // إزالة with('projects') مؤقتاً لحل المشكلة
+        $service = Service::where('slug', $slug)->active()->firstOrFail();
         
         $services = Service::active()->ordered()->get();
         
@@ -30,11 +32,15 @@ class ServiceController extends Controller
                                 ->limit(3)
                                 ->get();
 
+        // جلب المشاريع المرتبطة بالخدمة بشكل منفصل
+        $relatedProjects = $service->projects()->with('images')->latest()->take(3)->get();
+
         return view('front.services.show', compact(
             'profile', 
             'service', 
             'services', 
-            'relatedServices'
+            'relatedServices',
+            'relatedProjects'
         ));
     }
 }

@@ -14,18 +14,10 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->timestamps();
         });
-
-        Schema::create('project_technology', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('project_id')->constrained()->onDelete('cascade');
-            $table->foreignId('technology_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-        });
     }
 
     public function down()
     {
-        Schema::dropIfExists('project_technology');
         Schema::dropIfExists('technologies');
     }
 };

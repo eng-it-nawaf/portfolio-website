@@ -1,256 +1,260 @@
 @extends('admin.layouts.app')
 
-@section('title', 'تعديل الخدمة')
-
-@push('styles')
-<link rel="stylesheet" href="{{ asset('admin/css/admin-services.css') }}">
-@endpush
+@section('title', 'تعديل الخدمة: ' . $service->title)
 
 @section('content')
-<div class="content-wrapper">
-    <div class="page-header">
-        <div class="header-content">
-            <h1 class="page-title">تعديل الخدمة</h1>
-            <p class="page-description">تعديل خدمة: {{ $service->title }}</p>
-        </div>
-        <div class="header-actions">
-            <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> رجوع للقائمة
-            </a>
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">لوحة التحكم</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.services.index') }}">الخدمات</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">تعديل الخدمة</li>
+                </ol>
+            </nav>
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0">
+                    <i class="fas fa-edit text-warning me-2"></i>
+                    تعديل الخدمة: {{ $service->title }}
+                </h1>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.services.show', $service->id) }}" class="btn btn-info">
+                        <i class="fas fa-eye me-2"></i> عرض
+                    </a>
+                    <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-right me-2"></i> رجوع
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="service-card">
-        <div class="card-body">
-            <form action="{{ route('admin.services.update', $service->id) }}" method="POST" enctype="multipart/form-data" class="service-form">
+    <div class="card shadow border-0">
+        <div class="card-body p-4">
+            <form action="{{ route('admin.services.update', $service->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-info-circle"></i> المعلومات الأساسية
-                    </h3>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="title" class="form-label">عنوان الخدمة</label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" 
-                                   id="title" name="title" value="{{ old('title', $service->title) }}" required>
-                            @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="icon" class="form-label">أيقونة الخدمة</label>
-                            <input type="text" class="form-control" id="icon" name="icon" 
-                                   value="{{ old('icon', $service->icon) }}" placeholder="مثال: fas fa-code">
-                            <div class="form-text">استخدم أسماء أيقونات Font Awesome</div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- المعلومات الأساسية -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    المعلومات الأساسية
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">عنوان الخدمة <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('title') is-invalid @enderror" 
+                                           id="title" name="title" value="{{ old('title', $service->title) }}" required>
+                                    @error('title')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">الوصف المختصر <span class="text-danger">*</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" 
+                                              id="description" name="description" rows="3" required>{{ old('description', $service->description) }}</textarea>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="content" class="form-label">المحتوى الكامل <span class="text-danger">*</span></label>
+                                    <textarea class="form-control @error('content') is-invalid @enderror" 
+                                              id="content" name="content" rows="8" required>{{ old('content', $service->content) }}</textarea>
+                                    @error('content')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="description" class="form-label">الوصف المختصر</label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" 
-                                  id="description" name="description" rows="3" required>{{ old('description', $service->description) }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="content" class="form-label">المحتوى الكامل</label>
-                        <textarea class="form-control @error('content') is-invalid @enderror" 
-                                  id="content" name="content" rows="6" required>{{ old('content', $service->content) }}</textarea>
-                        @error('content')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+
+                    <div class="col-lg-4">
+                        <!-- الإعدادات -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-cog me-2"></i>
+                                    الإعدادات
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="icon" class="form-label">أيقونة الخدمة</label>
+                                    <input type="text" class="form-control" id="icon" name="icon" 
+                                           value="{{ old('icon', $service->icon) }}" placeholder="fas fa-code">
+                                    <small class="text-muted">أيقونات Font Awesome</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="order" class="form-label">ترتيب العرض</label>
+                                    <input type="number" class="form-control" id="order" name="order" 
+                                           value="{{ old('order', $service->order) }}" min="0">
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="is_featured" 
+                                               name="is_featured" value="1" {{ old('is_featured', $service->is_featured) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_featured">خدمة مميزة</label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="is_active" 
+                                               name="is_active" value="1" {{ old('is_active', $service->is_active) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_active">تفعيل الخدمة</label>
+                                    </div>
+                                </div>
+
+                                <!-- حالة الخدمة -->
+                                <div class="alert alert-light border">
+                                    <h6 class="alert-heading mb-2">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        معلومات الخدمة
+                                    </h6>
+                                    <div class="row small">
+                                        <div class="col-6">
+                                            <div class="mb-2">
+                                                <strong>المشاريع:</strong><br>
+                                                <span class="badge bg-info">{{ $service->projects->count() }}</span>
+                                            </div>
+                                            <div class="mb-2">
+                                                <strong>تاريخ الإنشاء:</strong><br>
+                                                {{ $service->created_at->format('Y/m/d') }}
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="mb-2">
+                                                <strong>آخر تحديث:</strong><br>
+                                                {{ $service->updated_at->format('Y/m/d') }}
+                                            </div>
+                                            <div class="mb-2">
+                                                <strong>الرابط:</strong><br>
+                                                <a href="{{ route('services.show', $service->slug) }}" target="_blank" class="text-primary">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- الصور -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-images me-2"></i>
+                                    الصور
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- صورة الخدمة -->
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">صورة الخدمة</label>
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                    
+                                    @if($service->image)
+                                    <div class="mt-2">
+                                        <img src="{{ Storage::url($service->image) }}" 
+                                             alt="{{ $service->title }}" 
+                                             class="img-fluid rounded" 
+                                             style="max-height: 150px;">
+                                        <div class="mt-2">
+                                            <a href="#" class="text-danger small" 
+                                               onclick="event.preventDefault(); document.getElementById('remove-image-form').submit();">
+                                                <i class="fas fa-trash me-1"></i> حذف الصورة
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+
+                                <!-- صورة الغلاف -->
+                                <div class="mb-3">
+                                    <label for="cover_image" class="form-label">صورة الغلاف</label>
+                                    <input type="file" class="form-control" id="cover_image" name="cover_image" accept="image/*">
+                                    
+                                    @if($service->cover_image)
+                                    <div class="mt-2">
+                                        <img src="{{ Storage::url($service->cover_image) }}" 
+                                             alt="{{ $service->title }}" 
+                                             class="img-fluid rounded" 
+                                             style="max-height: 150px;">
+                                        <div class="mt-2">
+                                            <a href="#" class="text-danger small" 
+                                               onclick="event.preventDefault(); document.getElementById('remove-cover-image-form').submit();">
+                                                <i class="fas fa-trash me-1"></i> حذف صورة الغلاف
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SEO -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-search me-2"></i>
+                                    SEO
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="meta_title" class="form-label">عنوان SEO</label>
+                                    <input type="text" class="form-control" id="meta_title" name="meta_title" 
+                                           value="{{ old('meta_title', $service->meta_title) }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="meta_description" class="form-label">وصف SEO</label>
+                                    <textarea class="form-control" id="meta_description" name="meta_description" 
+                                              rows="3">{{ old('meta_description', $service->meta_description) }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="meta_keywords" class="form-label">الكلمات الدلالية</label>
+                                    <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" 
+                                           value="{{ old('meta_keywords', $service->meta_keywords) }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-image"></i> صورة الخدمة
-                    </h3>
-                    
-                    <div class="file-upload">
-                        <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(this)">
-                        <label for="image" class="file-upload-label">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>انقر لتغيير صورة الخدمة</span>
-                            <small>اتركه فارغاً للحفاظ على الصورة الحالية</small>
-                        </label>
-                        @error('image')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
-                        
-                        @if($service->image)
-                        <div class="file-preview">
-                            <img src="{{ asset('storage/' . $service->image) }}" 
-                                 alt="{{ $service->title }}" 
-                                 style="max-height: 150px;">
-                            <div class="mt-2">
-                                <a href="#" class="text-danger" onclick="event.preventDefault(); document.getElementById('remove-image').submit();">
-                                    <i class="fas fa-trash"></i> حذف الصورة الحالية
-                                </a>
-                            </div>
-                        </div>
-                        @else
-                        <div id="image-preview" class="file-preview"></div>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-star"></i> ميزات الخدمة
-                    </h3>
-                    
-                    <div id="features-container" class="features-container">
-                        @php
-                            // معالجة البيانات القديمة أولاً
-                            $features = old('features', []);
-                            
-                            // إذا لم تكن هناك بيانات قديمة، استخدم بيانات الخدمة
-                            if (empty($features)) {
-                                $features = $service->features;
-                                
-                                // إذا كانت سلسلة نصية، حاول تحويلها إلى مصفوفة
-                                if (is_string($features)) {
-                                    $decoded = json_decode($features, true);
-                                    $features = is_array($decoded) ? $decoded : [];
-                                }
-                                
-                                // تأكد أن $features هي مصفوفة
-                                $features = is_array($features) ? $features : [];
-                            }
-                        @endphp
-                        
-                        @foreach($features as $feature)
-                            @if(is_string($feature) && !empty(trim($feature)))
-                            <div class="feature-item">
-                                <input type="text" name="features[]" class="feature-input" 
-                                       value="{{ $feature }}" placeholder="أدخل ميزة جديدة">
-                                <button type="button" class="btn-remove remove-feature">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            @endif
-                        @endforeach
-                        
-                        {{-- إذا لم توجد ميزات، أضف حقل واحد فارغ --}}
-                        @if(count($features) === 0)
-                        <div class="feature-item">
-                            <input type="text" name="features[]" class="feature-input" 
-                                   placeholder="أدخل ميزة جديدة">
-                            <button type="button" class="btn-remove remove-feature">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        @endif
-                    </div>
-                    <button type="button" class="btn-add" id="add-feature">
-                        <i class="fas fa-plus"></i> إضافة ميزة جديدة
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-save me-2"></i> حفظ التغييرات
                     </button>
-                </div>
-
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-list-ol"></i> خطوات العمل
-                    </h3>
-                    
-                    <div id="process-container" class="process-container">
-                        @php
-                            // معالجة البيانات القديمة أولاً
-                            $process = old('process', []);
-                            
-                            // إذا لم تكن هناك بيانات قديمة، استخدم بيانات الخدمة
-                            if (empty($process)) {
-                                $process = $service->process;
-                                
-                                // إذا كانت سلسلة نصية، حاول تحويلها إلى مصفوفة
-                                if (is_string($process)) {
-                                    $decoded = json_decode($process, true);
-                                    $process = is_array($decoded) ? $decoded : [];
-                                }
-                                
-                                // تأكد أن $process هي مصفوفة
-                                $process = is_array($process) ? $process : [];
-                            }
-                        @endphp
-                        
-                        @foreach($process as $step)
-                            @if(is_string($step) && !empty(trim($step)))
-                            <div class="process-item">
-                                <input type="text" name="process[]" class="process-input" 
-                                       value="{{ $step }}" placeholder="أدخل خطوة جديدة">
-                                <button type="button" class="btn-remove remove-process">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            @endif
-                        @endforeach
-                        
-                        {{-- إذا لم توجد خطوات، أضف حقل واحد فارغ --}}
-                        @if(count($process) === 0)
-                        <div class="process-item">
-                            <input type="text" name="process[]" class="process-input" 
-                                   placeholder="أدخل خطوة جديدة">
-                            <button type="button" class="btn-remove remove-process">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        @endif
-                    </div>
-                    <button type="button" class="btn-add" id="add-process">
-                        <i class="fas fa-plus"></i> إضافة خطوة جديدة
-                    </button>
-                </div>
-
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-cog"></i> الإعدادات
-                    </h3>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="is_featured" 
-                                       name="is_featured" value="1" {{ old('is_featured', $service->is_featured) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_featured">خدمة مميزة</label>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="is_active" 
-                                       name="is_active" value="1" {{ old('is_active', $service->is_active) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">تفعيل الخدمة</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="order" class="form-label">ترتيب العرض</label>
-                        <input type="number" class="form-control" id="order" name="order" 
-                               value="{{ old('order', $service->order) }}" min="0">
-                        <div class="form-text">رقم الترتيب لعرض الخدمات (الأصغر يظهر أولاً)</div>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-submit">
-                        <i class="fas fa-save"></i> حفظ التغييرات
-                    </button>
-                    <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> إلغاء
+                    <a href="{{ route('admin.services.index') }}" class="btn btn-secondary btn-lg px-4">
+                        <i class="fas fa-times me-2"></i> إلغاء
                     </a>
                 </div>
             </form>
 
+            <!-- نماذج حذف الصور -->
             @if($service->image)
-            <form id="remove-image" action="{{ route('admin.services.remove-image', $service->id) }}" 
-                  method="POST" style="display: none;">
+            <form id="remove-image-form" action="{{ route('admin.services.remove-image', $service->id) }}" method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
+            @endif
+
+            @if($service->cover_image)
+            <form id="remove-cover-image-form" action="{{ route('admin.services.remove-cover-image', $service->id) }}" method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
             </form>
@@ -259,65 +263,24 @@
     </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // إضافة ميزة جديدة
-    document.getElementById('add-feature').addEventListener('click', function() {
-        const container = document.getElementById('features-container');
-        const featureItem = document.createElement('div');
-        featureItem.className = 'feature-item';
-        featureItem.innerHTML = `
-            <input type="text" name="features[]" class="feature-input" placeholder="أدخل ميزة جديدة">
-            <button type="button" class="btn-remove remove-feature">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
-        container.appendChild(featureItem);
-    });
-
-    // إضافة خطوة جديدة
-    document.getElementById('add-process').addEventListener('click', function() {
-        const container = document.getElementById('process-container');
-        const processItem = document.createElement('div');
-        processItem.className = 'process-item';
-        processItem.innerHTML = `
-            <input type="text" name="process[]" class="process-input" placeholder="أدخل خطوة جديدة">
-            <button type="button" class="btn-remove remove-process">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
-        container.appendChild(processItem);
-    });
-
-    // حذف ميزة أو خطوة
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.remove-feature') || e.target.closest('.remove-process')) {
-            const item = e.target.closest('.feature-item, .process-item');
-            // لا تسمح بحذف الحقل الأخير
-            const container = item.parentElement;
-            if (container.children.length > 1) {
-                item.remove();
-            }
-        }
-    });
-});
-
-function previewImage(input) {
-    const preview = document.getElementById('image-preview');
-    if (!preview) return;
-    
-    preview.innerHTML = '';
-    
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.alt = 'معاينة الصورة';
-            preview.appendChild(img);
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
+<style>
+.form-check.form-switch {
+    padding-left: 2.5em;
 }
-</script>
+
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.alert-light {
+    background-color: #f8f9fa;
+    border-color: #e9ecef;
+}
+
+.badge {
+    font-size: 0.75em;
+    padding: 0.35em 0.65em;
+}
+</style>
 @endsection
